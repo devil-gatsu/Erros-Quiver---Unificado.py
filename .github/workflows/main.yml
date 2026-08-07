@@ -3,7 +3,7 @@ name: Build EXE PRO
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # Permite rodar o script manualmente clicando num botão
+  workflow_dispatch:
 
 jobs:
   build-windows:
@@ -11,12 +11,12 @@ jobs:
 
     steps:
     - name: Checkout do Repositório
-      uses: actions/checkout@v4
+      uses: actions/checkout@v4 # Atualizado para v4
 
     - name: Configurar Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # Atualizado para v5
       with:
-        python-version: '3.11' # Pode ser a versão que você preferir
+        python-version: '3.11'
 
     - name: Instalar Dependências e PyInstaller
       run: |
@@ -25,13 +25,11 @@ jobs:
         pip install pyinstaller
 
     - name: Compilar o executável
-      # O --onefile cria apenas um arquivo .exe. 
-      # O --windowed esconde a tela preta do console do Windows.
       run: |
         pyinstaller --noconfirm --onefile --windowed --name "Analisador_VIP" "Erros Quiver - Unificado.py"
 
     - name: Upload do EXE como Artefato
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4 # Atualizado para v4 (A correção principal!)
       with:
         name: Analisador-Executavel
         path: dist/Analisador_VIP.exe
